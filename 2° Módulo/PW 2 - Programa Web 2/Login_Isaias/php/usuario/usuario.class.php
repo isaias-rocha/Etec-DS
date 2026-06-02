@@ -33,7 +33,7 @@ class Usuario
         $stmt->bindValue(":e", $email);
         $stmt->bindValue(":n", $nome);
         $stmt->bindValue(":s", $senha);
-        $stmt->bindValue(":t", $telefone);
+        $stmt->bindValue(":s", $telefone);
 
         return $stmt->execute();
     }

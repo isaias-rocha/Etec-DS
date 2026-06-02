@@ -10,14 +10,13 @@ body {
 }
 
 .contorno {
-    background-color: #ffffff; /* Fundo branco ou levemente cinza traz clareza */
-    border: none; /* Removi a borda preta para um look mais "clean" */
-    border-radius: 12px; /* Cantos um pouco mais arredondados */
+    background-color: #ffffff;        /* Fundo branco ou levemente cinza traz clareza */
+    border: none;                       /* Removi a borda preta para um look mais "clean" */
+    border-radius: 12px;                /* Cantos um pouco mais arredondados */
     padding: 40px 30px;
     width: 100%;
     max-width: 400px;
-    /* Sombra mais suave e moderna */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);     /* Sombra mais suave e moderna */
     box-sizing: border-box;
     text-align: center;
 }
@@ -68,3 +67,69 @@ p {
     margin-bottom: 30px;
     line-height: 1.6;
 }
+
+
+
+   body {
+            height: auto;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .contorno {
+            max-width: 440px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .link-nav {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+
+        .link-nav a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .link-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 16px;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .feedback.sucesso {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .feedback.erro {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .icone { margin-right: 6px; }
+
+        .hint {
+            font-size: 12px;
+            color: #94a3b8;
+            text-align: left;
+            margin-top: -14px;
+            margin-bottom: 20px;}
