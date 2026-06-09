@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>ESP32 GPS Map Dashboard</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background-color: #070b15;
+            color: #f8fafc;
+            margin: 0;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #38bdf8;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .card {
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid #334155;
+            text-align: left;
+        }
+
+        .card-title {
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #e2e8f0;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            float: right;
+            font-weight: bold;
+        }
+
+        .badge-wait {
+            background-color: #b45309;
+            color: #fef3c7;
+        }
+
+        .badge-ok {
+            background-color: #15803d;
+            color: #dcfce7;
+        }
+
+        /* Tamanho da janela do mapa */
+        #map {
+            height: 280px;
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 10px;
+            border: 2px solid #334155;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🛰️ Dispositivo ESP32 GPS COM MAPA</h1>
+
+        <div class="card">
+            <span id="status-badge" class="badge badge-wait">Buscando...</span>
+            <div class="card-title">Status do Sinal</div>
+            <div class="value" id="satellites">0 Satélites</div>
+        </div>
+
+        <div id="map"></div>
+
+        <div class="grid-2" style="margin-top: 12px;">
+            <div class="card">
+                <div class="card-title">Latitude</div>
+                <div class="value" id="lat">---</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Longitude</div>
+                <div class="value" id="lng">---</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Hora Local</div>
+            <div class="value" id="time">00:00:00</div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializa o mapa apontado para o Brasil por padrão antes de achar o GPS
+        var map = L.map('map').setView([-14.2350, -51.9253], 4);
+
+        // Carrega as imagens de mapa gratuitas do OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // Cria o marcador (pino) vermelho no mapa
+        var marker = L.marker([-14.2350, -51.9253]).addTo(map);
+        var primeiraCentralizacao = true;
+
+        setInterval(function () {
+            fetch('/data').then(r => r.json()).then(data => {
+                document.getElementById('satellites').innerText = data.sats + " Satélites";
+                let b = document.getElementById('status-badge');
+
+                if (data.fix == 1) {
+                    b.innerText = "Sinal OK"; b.className = "badge badge-ok";
+                    document.getElementById('lat').innerText = data.lat;
+                    document.getElementById('lng').innerText = data.lng;
+                    document.getElementById('time').innerText = data.time;
+
+                    var novaLat = parseFloat(data.lat);
+                    var novaLng = parseFloat(data.lng);
+
+                    // Move o marcador para a nova posição do GPS
+                    marker.setLatLng([novaLat, novaLng]);
+
+                    // Centraliza o mapa na primeira vez ou se o ponto sumir da tela
+                    if (primeiraCentralizacao) {
+                        map.setView([novaLat, novaLng], 16); // Zoom aproximado de rua
+                        primeiraCentralizacao = false;
+                    }
+                } else {
+                    b.innerText = "Sem Sinal"; b.className = "badge badge-wait";
+                    document.getElementById('lat').innerText = "Aguardando...";
+                    document.getElementById('lng').innerText = "Aguardando...";
+                }
+            }).catch(err => {
+                b.innerText = "Erro Conexão"; b.className = "badge badge-wait";
+            });
+        }, 2000);
+    </script>
+</body>
+
+</html>
