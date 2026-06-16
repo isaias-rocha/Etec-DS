@@ -25,13 +25,13 @@ $confirmar = trim($_POST['confirmar'] ?? '');
 
 $erros = [];
 
-if ($nome === '')                                                  $erros[] = 'O campo "nome" não pode ficar vazio.';
-if ($email === '')                                                 $erros[] = 'O campo "e-mail" não pode ficar vazio.';
-elseif (!filter_var($email, FILTER_VALIDATE_EMAIL))               $erros[] = 'O e-mail informado é inválido.';
-if ($senha === '')                                                 $erros[] = 'O campo "senha" não pode ficar vazio.';
-elseif (strlen($senha) < 6)                                       $erros[] = 'A senha deve ter pelo menos 6 caracteres.';
-if ($confirmar === '')                                             $erros[] = 'Por favor, confirme sua senha.';
-elseif ($senha !== '' && $confirmar !== '' && $senha !== $confirmar) $erros[] = 'As senhas não coincidem.';
+if ($nome === '')                                                       $erros[] = 'O campo "nome" não pode ficar vazio.';
+if ($email === '')                                                      $erros[] = 'O campo "e-mail" não pode ficar vazio.';
+elseif (!filter_var($email, FILTER_VALIDATE_EMAIL))                     $erros[] = 'O e-mail informado é inválido.';
+if ($senha === '')                                                      $erros[] = 'O campo "senha" não pode ficar vazio.';
+elseif (strlen($senha) < 6)                                             $erros[] = 'A senha deve ter pelo menos 6 caracteres.';
+if ($confirmar === '')                                                  $erros[] = 'Por favor, confirme sua senha.';
+elseif ($senha !== '' && $confirmar !== '' && $senha !== $confirmar)    $erros[] = 'As senhas não coincidem.';
 
 if ($erros) {
     http_response_code(422);
