@@ -17,7 +17,7 @@ public class TelaCadastroCliente extends JFrame {
 
     public TelaCadastroCliente() {
         setTitle("Sistema 1 — Cadastro de Clientes");
-        setSize(1920, 1080);
+        setSize(1280, 720); //tamanho da tela
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(8, 8));
