@@ -43,7 +43,6 @@
                 <input type="submit" id = "botao">
             </form>
         </section>
-
     </main>
 
 
@@ -53,3 +52,40 @@
     
 </body>
 </html>
+
+<?php
+if(isset($_POST['nome']))   {
+    $nome       = addsLashes(   $_POST['nome']    );
+    $valor      = addsLashes(   $_POST['valor']   );
+    $descricao  = addsLashes(   $_POST['desc']    );
+    $nome_arquivo = '';
+
+
+    #cria o vetor para guardar o nome das fotos se o usuario enviar
+    $fotos = array();
+    
+    #checa se foi enviada alguma foto
+    if (isset($_FILES['foto'])  ) {
+        $tipo = '';
+        for ($i = 0;  $i < count($_FILES['foto']['name']) ;$i++) {
+            if($_FILES['foto']['type'][$i] == 'image/jpeg'){
+                $tipo = ".jpg";
+            }else if($_FILES['foto']['type'][$i] == 'image/png'){
+                $tipo = ".png";
+            }else {
+                $tipo = "outro";
+            }
+
+            # se o arquivo nao for JPG ou PNG, dispara a mensagem
+            if( $tipo == "outro") {
+                    echo "<script>alert('Só é possível enviar arquivos JPG e PNG')</script>";
+            }else{
+                $nome_arquivo = $_FILES['foto']['name'][$i].rand(1,999).$tipo;
+                move_uploaded_file($_FILES['foto']['name'][$i], 'imagens/'.$nome_arquivo);
+            }
+
+            array_push($fotos, $nome_arquivo);
+
+        }
+    }
+}
