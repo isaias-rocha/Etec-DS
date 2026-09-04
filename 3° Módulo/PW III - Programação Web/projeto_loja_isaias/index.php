@@ -87,5 +87,19 @@ if(isset($_POST['nome']))   {
             array_push($fotos, $nome_arquivo);
 
         }
+
+        // Verifica se todos os campos foram preenchidos no formulario
+        if (!empty($nome) && !empty($valor) && !empty($descricao)) {
+            require 'classeS\Produto.class.php';
+            $produto = new Produto();
+            $retorno = $produto->conecta();
+
+            if($retorno){
+                $produto->enviarProduto($nome, $descricao, $valor, $fotos);
+                echo "<script>alert('Produto enviado com sucesso!')<\script>";
+            }else{
+                echo "<script>alert('Banco indisponivel. Tente novamente mais tarde!')<\script>";
+            }
+        }
     }
 }

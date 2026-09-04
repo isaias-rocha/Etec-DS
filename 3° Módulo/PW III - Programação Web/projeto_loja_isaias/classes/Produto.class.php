@@ -38,19 +38,15 @@ class Produto {
         #inseir Imagem na tabela imagens
         #===============================
         if(count($fotos) > 0) {
-            for($i = 0; $1 < count($fotos); $i++){
-                $nome_foto = $foto[i];
+            for($i = 0; $i < count($fotos); $i++){
+                $nome_foto = $fotos[$i];
                 $sql = "INSERT INTO imagens (nome_imagem, fk_id_produto) VALUES (:n, :fk)";
                 $sql = $this->pdo->prepare($sql);
                 
                 $sql->bindValue(":n", $nome_foto);
                 $sql->bindValue(":fk", $id_produto);
-                $sql->execute;
-                
-                
+                $sql->execute();
             }
         }
-
     }
-
 }
