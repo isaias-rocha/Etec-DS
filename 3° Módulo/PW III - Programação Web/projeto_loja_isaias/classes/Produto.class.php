@@ -49,4 +49,16 @@ class Produto {
             }
         }
     }
+
+    public function buscarProdutos(){
+        $sql = "(SELECT *, (SELECT nome_imagem FROM imagens WHERE fk_id_produto = 
+        produtos.id_produto LIMIT 1) AS foto_capa FROM produtos)";
+
+          $sql = $this->pdo->query($sql);
+        if($sql->rowCount() > 0){
+            return $sql->fetchAll();
+        }else{
+            return array();
+        }
+    }
 }

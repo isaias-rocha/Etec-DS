@@ -17,7 +17,7 @@
   <ul class="nav-links">
     <li><a href="index.php" class="active">Início</a></li>
     <li><a href="#">Cadastrar</a></li>
-    <li><a href="#">Buscar</a></li>
+    <li><a href="produtoEstatico.php">Produto</a></li>
     <li><a href="#">Sobre</a></li>
   </ul>
 </nav>
