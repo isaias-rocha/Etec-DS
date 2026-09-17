@@ -26,7 +26,7 @@
 
     <main>
         <section>
-            <a href="produtos.php" calss="sombra" id="verProdutos"> Ver todos os produtos </a>
+            <a href="produto.php" calss="sombra" id="verProdutos"> Ver todos os produtos </a>
             <form action="" method = "post" enctype = "multipart/form-data">
                 <h1>Envio de Imagens</h1>
 

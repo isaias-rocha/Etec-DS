@@ -61,4 +61,51 @@ class Produto {
             return array();
         }
     }
+    
+    public function buscarProduto(  $id_produto  ){
+        #===========================================================================
+        # crie uma variavel $sql para buscar um produto com um i, e coloque um alias (:)
+        $sql = "SELECT * FROM produtos WHERE id_produto = :id";
+        
+        #===========================================================================
+        # passe a variavel para o prepare e depois o bindVAlue
+        $sql = $this->pdo->prepare($sql)
+        $sql -> bindValue (":id", $id_produto);
+
+        #===========================================================================
+        # execute o comando
+        $sql -> execute();
+
+        #===========================================================================
+        # se rowCont() > 0 retorne um array com os dados, senao retorne um array vazio
+        if($sql->rowCount() > 0){
+            return $sql->fetch();
+        }else{
+            return array();
+        }
+    }
+
+    public function buscarImagens ($id){
+        #===========================================================================
+        # crie uma variavel $sql para buscar um produto com um i, e coloque um alias (:)
+        $sql = "SELECT * FROM imagens WHERE fk_id_produto = :id";
+        
+        #===========================================================================
+        # passe a variavel para o prepare e depois o bindVAlue
+        $sql = $this->pdo->prepare($sql)
+        $sql -> bindValue (":id", $$id);
+
+        #===========================================================================
+        # execute o comando
+        $sql -> execute();
+
+        #===========================================================================
+        # se rowCont() > 0 retorne um array com os dados, senao retorne um array vazio
+        if($sql->rowCount() > 0){
+            return $sql->fetch();
+        }else{
+            return array();
+        }
+
+    }
 }
